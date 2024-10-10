@@ -36,7 +36,7 @@ class EmployeeSeeder extends Seeder
             'religion' => 'Kristen',
             'sex' => 'Female',
             'phone' => '081234567891',
-            'salary' => 6000000,
+            'salary' => 60000000,
         ]);
 
         // Tambahkan data lain sesuai kebutuhan
