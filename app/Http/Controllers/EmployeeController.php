@@ -3,45 +3,74 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
 {
-    // Simpan user baru
-    public function store(Request $request) {
-        $user = User::create([
-            'name' => '',
-            'email' => '',
-            'password' => ''
-        ]);
+    public function index()
+    {
+        $employees = Employee::all();
+        return view('employees.index', compact('employees'));
     }
 
-    // Tampilkan form untuk mengedit user
-    public function edit(User $user) {
-        $roles = Role::all();
-        return view('admin.users.edit', compact('user', 'roles'));
+    public function create()
+    {
+        return view('employees.create');
     }
 
-    // Update user yang ada
-    public function update(Request $request, User $user) {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            
-        ]);
-
-        $user->update($validated);
-        $user->assignRole($request->input('role'));
-
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+    public function store(Request $request)
+    {
+        $employee = new Employee();
+        $employee->user_id = $request->input('user_id');
+        $employee->depart_id = $request->input('depart_id');
+        $employee->address = $request->input('address');
+        $employee->place_of_birth = $request->input('place_of_birth');
+        $employee->dob = $request->input('dob');
+        $employee->religion = $request->input('religion');
+        $employee->sex = $request->input('sex');
+        $employee->phone = $request->input('phone');
+        $employee->salary = $request->input('salary');
+        $employee->save();
+        return redirect()->route('employees.index');
     }
 
-    // Hapus user
-    public function destroy(User $user) {
-        $user->delete(); // Soft delete user
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+    public function show($id)
+    {
+        $employee = Employee::find($id);
+        return view('employees.show', compact('employee'));
+    }
+
+    public function edit($id)
+    {
+        $employee = Employee::find($id);
+        return view('employees.edit', compact('employee'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $employee = Employee::find($id);
+        $employee->user_id = $request->input('user_id');
+        $employee->depart_id = $request->input('depart_id');
+        $employee->address = $request->input('address');
+        $employee->place_of_birth = $request->input('place_of_birth');
+        $employee->dob = $request->input('dob');
+        $employee->religion = $request->input('religion');
+        $employee->sex = $request->input('sex');
+        $employee->phone = $request->input('phone');
+        $employee->salary = $request->input('salary');
+        $employee->save();
+        return redirect()->route('employees.index');
+    }
+
+    public function destroy($id)
+    {
+        $employee = Employee::find($id);
+        $employee->delete();
+        return redirect()->route('employees.index');
     }
 }

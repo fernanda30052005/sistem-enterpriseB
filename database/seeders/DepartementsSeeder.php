@@ -21,8 +21,8 @@ class DepartementsSeeder extends Seeder
             ],
         ];
         
-       foreach($departments as $departments) {
-            Departement::create($departments);
+       foreach($departments as $departements) {
+            Departement::create($departements);
         }
     }
 }

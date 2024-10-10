@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -13,26 +12,26 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $adi = User::updateORcreate([
-            'name' => 'adi',
-            'email' => 'adi@email.com',
-            'password' => bcrypt('password'),
-        ]);
+        // Mengupdate atau membuat pengguna adi
+        $adi = User::updateOrCreate(
+            ['email' => 'adi@email.com'], // Kondisi pencarian
+            ['name' => 'adi', 'password' => bcrypt('password')] // Data yang akan diperbarui atau dibuat
+        );
         $adi->assignRole('admin');
 
-        $budi = User::updateORcreate([
-            'name' => 'Budi',
-            'email' => 'budi@email.com',
-            'password' => bcrypt('password'),
-        ]);
+        // Mengupdate atau membuat pengguna budi
+        $budi = User::updateOrCreate(
+            ['email' => 'budi@email.com'],
+            ['name' => 'Budi', 'password' => bcrypt('password')]
+        );
         $budi->assignRole('operator');
 
-        $cindy = User::updateORcreate([
-            'name' => 'cindy',
-            'email' => 'cindy@email.com',
-            'password' => bcrypt('password'),
-        ]);
-        $cindy->assignRole('operator'); //role
-        $cindy->givePermissionTo('delete users'); //memberikan akses permission langsung
+        // Mengupdate atau membuat pengguna cindy
+        $cindy = User::updateOrCreate(
+            ['email' => 'cindy@email.com'],
+            ['name' => 'cindy', 'password' => bcrypt('password')]
+        );
+        $cindy->assignRole('operator'); // Menambahkan role
+        $cindy->givePermissionTo('delete users'); // Memberikan permission langsung
     }
 }

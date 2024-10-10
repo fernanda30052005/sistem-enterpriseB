@@ -25,9 +25,9 @@ class RoleSeeder extends Seeder
             'show users',
             'add users',
             'edit users',
-            'show department',
-            'add department',
-            'edit department',]);
+            'show departements',
+            'add departements',
+            'edit departements',]);
     }
 
 }

@@ -50,7 +50,7 @@
                             <div data-i18n="Menu 2">Departements</div>
                         </a>
                     </li> <li class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{{route('employees.index')}}" class="menu-link">
                             <i class='bx bxs-user-account'></i>
                             <div data-i18n="Menu 2">Employees</div>
                         </a>

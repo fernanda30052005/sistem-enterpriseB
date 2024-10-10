@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\DepartementController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DepartementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,8 @@ Route::resource('users', UserController::class);
 Route::resource('roles', RoleController::class);
 
 Route::resource('departements', DepartementController::class);
+
+Route::resource('employees',EmployeeController::class);
 
 
 
