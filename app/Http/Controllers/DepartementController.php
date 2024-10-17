@@ -10,8 +10,8 @@ class DepartementController extends Controller
     public function index()
     {
         // Fetch departments using query builder and paginate
-        $departements = DB::table('departements')->paginate(10); // Adjust the number of items per page
-        return view('departements.index', compact('departements'));
+        $departments = DB::table('departements')->paginate(10); // Adjust the number of items per page
+        return view('departements.index', compact('departments'));
     }
 
     public function create()
@@ -40,9 +40,9 @@ class DepartementController extends Controller
     public function edit($id)
     {
         // Fetch the department by ID
-        $departements = DB::table('departements')->where('id', $id)->first();
+        $departments = DB::table('departements')->where('id', $id)->first();
         
-        if (!$departements) {
+        if (!$departments) {
             return redirect()->route('departements.index')->with('error', 'Departement not found.');
         }
 

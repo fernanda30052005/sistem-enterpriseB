@@ -2,43 +2,35 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Emlpoyee;
 use App\Models\Employee;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class EmployeeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        // Data karyawan untuk diinsert ke database
-        Employee::create([
-            'user_id' => 1,
-            'depart_id' => 101,
-            'address' => 'Jl. Mawar No. 123',
-            'place_of_birth' => 'Jakarta',
-            'dob' => '1990-05-15',
-            'religion' => 'Islam',
-            'sex' => 'Male',
-            'phone' => '081234567890',
-            'salary' => 5000000,
-        ]);
-
-        Employee::create([
-            'user_id' => 2,
-            'depart_id' => 102,
-            'address' => 'Jl. Melati No. 456',
-            'place_of_birth' => 'Bandung',
-            'dob' => '1985-10-21',
-            'religion' => 'Kristen',
-            'sex' => 'Female',
-            'phone' => '081234567891',
-            'salary' => 60000000,
-        ]);
-
-        // Tambahkan data lain sesuai kebutuhan
-    }
+        $employees = [
+            [
+                'user_id' => 1,
+                'departements_id' => 1,
+                'address' => 'jl.santai',
+                'place_of_birth' => 'pekanbaru',
+                'dob' =>'2004-12-02',
+                'religion' => 'Islam',
+                'sex' => 'Male',
+                'phone' => '1231412',
+                'salary' => '010910239',
+            ],
+            
+        ];
+        
+       foreach($employees as $employee) {
+            Employee::create($employee);
+ }
+}
 }

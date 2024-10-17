@@ -1,16 +1,18 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Traits\HasRoles;
 
 class Departement extends Model
 {
-    use HasFactory, HasRoles;
-
     protected $fillable = [
-        'name',
-        'description',];
+        'name', 
+        'description',
+    ];
+
+    // Relasi dengan Employee
+    public function employees()
+    {
+        return $this->hasMany(Employee::class, 'departements_id'); // Foreign key di tabel employees
+    }
 }

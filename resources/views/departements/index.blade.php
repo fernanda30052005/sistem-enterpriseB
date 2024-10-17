@@ -28,17 +28,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($departements as $key => $departements)
+                    @foreach($departments as $key => $departement)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $departements->name }}</td>
-                            <td>{{ $departements->description }}</td>
+                            <td>{{ $departement->name }}</td>
+                            <td>{{ $departement->description }}</td>
                             <td>
                                 <!-- Edit Button -->
-                                <a href="{{ route('departements.edit', $departements->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('departements.edit', $departement->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
                                 <!-- Delete Button -->
-                                <form action="{{ route('departements.destroy', $departements->id) }}" method="POST" class="d-inline">
+                                <form action="{{ route('departements.destroy', $departement->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>

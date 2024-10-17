@@ -4,73 +4,109 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\Departement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::all();
-        return view('employees.index', compact('employees'));
+        // Fetch employees with their related users and departments
+        $employees = Employee::with(['user', 'departement'])->paginate(10);
+        
+        return view('admin.employees.index', compact('employees'));
     }
 
     public function create()
     {
-        return view('employees.create');
+        $users = User::select('id', 'name')->get();
+        $departments = Departement::select('id', 'name')->get();
+
+        return view('admin.employees.create', compact('users', 'departments'));
     }
 
     public function store(Request $request)
-    {
-        $employee = new Employee();
-        $employee->user_id = $request->input('user_id');
-        $employee->depart_id = $request->input('depart_id');
-        $employee->address = $request->input('address');
-        $employee->place_of_birth = $request->input('place_of_birth');
-        $employee->dob = $request->input('dob');
-        $employee->religion = $request->input('religion');
-        $employee->sex = $request->input('sex');
-        $employee->phone = $request->input('phone');
-        $employee->salary = $request->input('salary');
-        $employee->save();
-        return redirect()->route('employees.index');
-    }
+{
+    // Validasi input
+    $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'departements_id' => 'required|exists:departements,id',
+        'address' => 'required|string|max:255',
+        'place_of_birth' => 'nullable|string|max:255',
+        'dob' => 'nullable|date',
+        'religion' => 'required|in:Islam,Katolik,Protestan,Hindu,Budha,Konghucu',
+        'sex' => 'required|in:Male,Female',
+        'phone' => 'required|string|max:15',
+        'salary' => 'required|numeric',
+    ]);
 
-    public function show($id)
-    {
-        $employee = Employee::find($id);
-        return view('employees.show', compact('employee'));
-    }
+    // Insert employee baru ke dalam database
+    DB::table('employees')->insert([
+        'user_id' => $request->user_id,
+        'departements_id' => $request->departements_id,
+        'address' => $request->address,
+        'place_of_birth' => $request->place_of_birth,
+        'dob' => $request->dob,
+        'religion' => $request->religion,
+        'sex' => $request->sex,
+        'phone' => $request->phone,
+        'salary' => $request->salary,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
+}
+
 
     public function edit($id)
     {
-        $employee = Employee::find($id);
-        return view('employees.edit', compact('employee'));
+        $employee = Employee::findOrFail($id);
+        $users = User::select('id', 'name')->get();
+        $departments = Departement::select('id', 'name')->get();
+
+        return view('admin.employees.edit', compact('employee', 'users', 'departments'));
     }
 
     public function update(Request $request, $id)
     {
-        $employee = Employee::find($id);
-        $employee->user_id = $request->input('user_id');
-        $employee->depart_id = $request->input('depart_id');
-        $employee->address = $request->input('address');
-        $employee->place_of_birth = $request->input('place_of_birth');
-        $employee->dob = $request->input('dob');
-        $employee->religion = $request->input('religion');
-        $employee->sex = $request->input('sex');
-        $employee->phone = $request->input('phone');
-        $employee->salary = $request->input('salary');
-        $employee->save();
-        return redirect()->route('employees.index');
+        // Validasi input
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'departements_id' => 'required|exists:departements,id',
+            'address' => 'required|string|max:255',
+            'place_of_birth' => 'nullable|string|max:255',
+            'dob' => 'nullable|date',
+            'religion' => 'required|in:Islam,Katolik,Protestan,Hindu,Budha,Konghucu',
+            'sex' => 'required|in:Male,Female',
+            'phone' => 'required|string|max:15',
+            'salary' => 'required|numeric',
+        ]);
+    
+        // Update employee berdasarkan ID
+        DB::table('employees')->where('id', $id)->update([
+            'user_id' => $request->user_id,
+            'departements_id' => $request->departements_id,
+            'address' => $request->address,
+            'place_of_birth' => $request->place_of_birth,
+            'dob' => $request->dob,
+            'religion' => $request->religion,
+            'sex' => $request->sex,
+            'phone' => $request->phone,
+            'salary' => $request->salary,
+            'updated_at' => now(),
+        ]);
+    
+        // Redirect dengan pesan sukses
+        return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
     }
+    
 
     public function destroy($id)
     {
-        $employee = Employee::find($id);
-        $employee->delete();
-        return redirect()->route('employees.index');
-    }
+        // Hapus employee...
+}
 }

@@ -4,8 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartementController;
+use App\Http\Controllers\LeaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,16 +23,14 @@ use App\Http\Controllers\DepartementController;
 
 // Redirect to login if user is not authenticated
 Route::get('/', function () {
-    if (auth()->check()) {
+   
         return redirect('/dashboard');
-    }
-    return redirect('/login');
 });
 
 // Dashboard route, only accessible by authenticated users
 Route::get('/dashboard', function () {
     return view('admin.blank.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
 
     // Route untuk Submenu 1
@@ -43,9 +44,15 @@ Route::resource('departements', DepartementController::class);
 
 Route::resource('employees',EmployeeController::class);
 
+Route::resource('payrolls', PayrollController::class);
+
+Route::resource('leaves', LeaveController::class);
+
+Route::resource('attendances', AttendanceController::class);
 
 
-// Auth routes (login, register, password reset, etc.)
-require __DIR__.'/auth.php';
+
+//Auth routes (login, register, password reset, etc.)
+
 
 

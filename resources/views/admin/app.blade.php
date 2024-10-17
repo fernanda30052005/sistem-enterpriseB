@@ -55,19 +55,19 @@
                             <div data-i18n="Menu 2">Employees</div>
                         </a>
                     </li> <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <a href="{{route('payrolls.index')}}" class="menu-link">
                            <i class='bx bxl-paypal'></i>
                             <div data-i18n="Menu 2">Payroll</div>
                         </a>
                     </li> <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <a href="{{route('leaves.index')}}" class="menu-link">
                             <i class='bx bxs-door-open' ></i>
                             <div data-i18n="Menu 2">Leave</div>
                         </a>
                     </li> <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <a href="{{route('attendances.index')}}" class="menu-link">
                             <i class='bx bxs-notepad'></i>
-                            <div data-i18n="Menu 2">Presence</div>
+                            <div data-i18n="Menu 2">Attendance</div>
                         </a>
                     <li class="menu-item">
                     <a href="#" class="menu-link menu-toggle">
