@@ -24,7 +24,7 @@
                 @foreach($payroll as $payrolls)
                     <tr>
                         <td>{{ $payrolls->user->name }}</td>
-                        <td>${{ number_format($payrolls->salary, 2) }}</td>
+                        <td>ID{{ number_format($payrolls->salary, 2) }}</td>
                         <td>
                             <a href="{{ route('payrolls.edit', $payrolls->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('payrolls.destroy', $payrolls->id) }}" method="POST" style="display:inline-block;">

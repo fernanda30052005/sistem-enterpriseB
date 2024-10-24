@@ -23,8 +23,10 @@ use App\Http\Controllers\LeaveController;
 
 // Redirect to login if user is not authenticated
 Route::get('/', function () {
-   
+    if (auth()->check()) {
         return redirect('/dashboard');
+    }
+    return redirect('/login');
 });
 
 // Dashboard route, only accessible by authenticated users
