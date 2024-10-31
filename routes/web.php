@@ -1,14 +1,20 @@
 <?php
 
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
+use App\Http\Controllers\CRMController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\PayrollController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DepartementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,15 +27,12 @@ use App\Http\Controllers\LeaveController;
 |
 */
 
-// Redirect to login if user is not authenticated
+// Rute beranda - langsung ke dashboard
 Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect('/dashboard');
-    }
-    return redirect('/login');
+    return redirect('/dashboard');
 });
 
-// Dashboard route, only accessible by authenticated users
+// Rute dashboard - dapat diakses tanpa login
 Route::get('/dashboard', function () {
     return view('admin.blank.index');
 })->name('dashboard');
@@ -52,9 +55,18 @@ Route::resource('leaves', LeaveController::class);
 
 Route::resource('attendances', AttendanceController::class);
 
+Route::get('/send-promotion', [CRMController::class, 'index'])->name('send.promotion.form');
+Route::post('/send-promotion', [CRMController::class, 'sendPromotion'])->name('send.promotion');
+Route::resource('customers', CustomerController::class);
+Route::resource('promotions', PromotionController::class);
+
 
 
 //Auth routes (login, register, password reset, etc.)
+Route::get('email', function(){
 
-
+    Mail::to('sample@gmail.com')
+        ->send(new TestMail());
+    return 'oke';
+});
 

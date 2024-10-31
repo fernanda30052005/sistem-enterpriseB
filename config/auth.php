@@ -4,12 +4,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Authentication Defaults
+    | Konfigurasi Default Autentikasi
     |--------------------------------------------------------------------------
     |
-    | This option controls the default authentication "guard" and password
-    | reset options for your application. You may change these defaults
-    | as required, but they're a perfect start for most applications.
+    | Opsi ini mengontrol "guard" autentikasi default dan opsi reset password
+    | untuk aplikasi Anda. Anda dapat mengubah nilai default ini sesuai
+    | kebutuhan, namun ini adalah konfigurasi awal yang baik.
     |
     */
 
@@ -20,18 +20,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Authentication Guards
+    | Guard Autentikasi
     |--------------------------------------------------------------------------
     |
-    | Next, you may define every authentication guard for your application.
-    | Of course, a great default configuration has been defined for you
-    | here which uses session storage and the Eloquent user provider.
+    | Berikutnya, Anda dapat mendefinisikan setiap guard autentikasi untuk aplikasi.
+    | Konfigurasi default yang bagus telah didefinisikan untuk Anda di sini
+    | yang menggunakan penyimpanan sesi dan provider pengguna Eloquent.
     |
-    | All authentication drivers have a user provider. This defines how the
-    | users are actually retrieved out of your database or other storage
-    | mechanisms used by this application to persist your user's data.
+    | Semua driver autentikasi memiliki provider pengguna. Ini mendefinisikan
+    | bagaimana pengguna diambil dari database atau mekanisme penyimpanan lain
+    | yang digunakan aplikasi ini untuk menyimpan data pengguna.
     |
-    | Supported: "session"
+    | Didukung: "session"
     |
     */
 
@@ -40,22 +40,27 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | User Providers
+    | Provider Pengguna
     |--------------------------------------------------------------------------
     |
-    | All authentication drivers have a user provider. This defines how the
-    | users are actually retrieved out of your database or other storage
-    | mechanisms used by this application to persist your user's data.
+    | Semua driver autentikasi memiliki provider pengguna. Ini mendefinisikan
+    | bagaimana pengguna diambil dari database atau mekanisme penyimpanan lain
+    | yang digunakan aplikasi ini untuk menyimpan data pengguna.
     |
-    | If you have multiple user tables or models you may configure multiple
-    | sources which represent each model / table. These sources may then
-    | be assigned to any extra authentication guards you have defined.
+    | Jika Anda memiliki beberapa tabel atau model pengguna, Anda dapat
+    | mengkonfigurasi beberapa sumber yang mewakili setiap model/tabel.
+    | Sumber-sumber ini kemudian dapat ditetapkan ke guard tambahan.
     |
-    | Supported: "database", "eloquent"
+    | Didukung: "database", "eloquent"
     |
     */
 
@@ -64,29 +69,24 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Resetting Passwords
+    | Reset Password
     |--------------------------------------------------------------------------
     |
-    | You may specify multiple password reset configurations if you have more
-    | than one user table or model in the application and you want to have
-    | separate password reset settings based on the specific user types.
+    | Anda dapat menentukan beberapa konfigurasi reset password jika memiliki
+    | lebih dari satu tabel atau model pengguna dalam aplikasi dan ingin
+    | memiliki pengaturan reset password terpisah berdasarkan tipe pengguna.
     |
-    | The expiry time is the number of minutes that each reset token will be
-    | considered valid. This security feature keeps tokens short-lived so
-    | they have less time to be guessed. You may change this as needed.
+    | Waktu kedaluwarsa adalah jumlah menit setiap token reset akan dianggap
+    | valid. Fitur keamanan ini membuat token berumur pendek sehingga
+    | lebih sulit ditebak. Anda dapat mengubahnya sesuai kebutuhan.
     |
-    | The throttle setting is the number of seconds a user must wait before
-    | generating more password reset tokens. This prevents the user from
-    | quickly generating a very large amount of password reset tokens.
+    | Pengaturan throttle adalah jumlah detik pengguna harus menunggu sebelum
+    | menghasilkan lebih banyak token reset password. Ini mencegah pengguna
+    | dengan cepat menghasilkan token reset password dalam jumlah besar.
     |
     */
 
@@ -94,22 +94,22 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
+            'expire' => 60, // 60 menit
+            'throttle' => 60, // 60 detik
         ],
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Password Confirmation Timeout
+    | Batas Waktu Konfirmasi Password
     |--------------------------------------------------------------------------
     |
-    | Here you may define the amount of seconds before a password confirmation
-    | times out and the user is prompted to re-enter their password via the
-    | confirmation screen. By default, the timeout lasts for three hours.
+    | Di sini Anda dapat menentukan jumlah detik sebelum konfirmasi password
+    | kedaluwarsa dan pengguna diminta memasukkan kembali password mereka
+    | melalui layar konfirmasi. Secara default timeout berlangsung 3 jam.
     |
     */
 
-    'password_timeout' => 10800,
+    'password_timeout' => 10800, // 3 jam
 
 ];
